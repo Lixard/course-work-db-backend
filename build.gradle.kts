@@ -2,17 +2,29 @@ plugins {
     java
 }
 
-group = "ru.student"
-version = "1.0-SNAPSHOT"
+allprojects {
 
-repositories {
-    mavenCentral()
+    apply {
+        plugin("java")
+    }
+
+    group = "ru.student"
+    version = "1.0"
+
+    repositories {
+        mavenCentral()
+    }
+
+    configure<JavaPluginConvention> {
+        sourceCompatibility = JavaVersion.VERSION_11
+    }
+
+    dependencies{
+    }
 }
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web:2.2.6.RELEASE")
-}
-
-configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_11
+    implementation(project(":services"))
+    implementation(project(":security"))
 }
