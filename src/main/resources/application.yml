@@ -1,0 +1,7 @@
+spring:
+  liquibase:
+    change-log: classpath:migrations/changelog.yml
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  type-handlers-package: ru.student.db.handler
