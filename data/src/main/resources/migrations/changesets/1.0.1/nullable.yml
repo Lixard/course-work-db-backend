@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Maksim Borisov
+      comment: do some field nullable
+      changes:
+        - sqlFile:
+            path: script.sql
+            relativeToChangelogFile: true
