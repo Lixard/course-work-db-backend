@@ -13,5 +13,5 @@ public interface AppointmentService {
 
     AppointmentDto update(AppointmentDto appointmentDto);
 
-    void delete(AppointmentDto appointmentDto);
+    void delete(int id);
 }
