@@ -1,4 +1,4 @@
-package ru.student.backend.db.model;
+package ru.student.backend.services.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +8,7 @@ import java.sql.Date;
 
 @Getter
 @Setter
-public class Patient {
+public class PatientDto {
     private int patientId;
     private String lastName;
     private String firstName;
