@@ -19,7 +19,8 @@ allprojects {
         sourceCompatibility = JavaVersion.VERSION_11
     }
 
-    dependencies{
+    dependencies {
+        implementation("ru.student:common:1.0")
     }
 }
 
