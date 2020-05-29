@@ -34,6 +34,11 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
+    public List<AppointmentDto> getPatientAppointments(int patientId) {
+        return appointmentStruct.toDto(appointmentMapper.getPatientAppointments(patientId));
+    }
+
+    @Override
     public AppointmentDto insert(AppointmentDto appointmentDto) {
         appointmentMapper.insert(appointmentStruct.fromDto(appointmentDto));
         return appointmentDto;

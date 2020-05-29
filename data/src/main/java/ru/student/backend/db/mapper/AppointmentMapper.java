@@ -22,6 +22,14 @@ public interface AppointmentMapper {
 
     @Select(
             //language=PostgreSQL
+            "SELECT appointment_id, patient_id, doctor_id, place, appointment_date, symptoms " +
+                    "FROM appointments " +
+                    "WHERE patient_id = #{id}"
+    )
+    List<Appointment> getPatientAppointments(@Param("id") int patientId);
+
+    @Select(
+            //language=PostgreSQL
             "SELECT appointment_id," +
                     " patient_id," +
                     " doctor_id," +
