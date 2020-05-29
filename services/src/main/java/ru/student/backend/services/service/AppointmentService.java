@@ -9,6 +9,8 @@ public interface AppointmentService {
 
     AppointmentDto findById(int id);
 
+    List<AppointmentDto> getPatientAppointments(int id);
+
     AppointmentDto insert(AppointmentDto appointmentDto);
 
     AppointmentDto update(AppointmentDto appointmentDto);
