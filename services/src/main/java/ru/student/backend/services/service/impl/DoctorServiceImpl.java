@@ -3,6 +3,7 @@ package ru.student.backend.services.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.student.backend.db.mapper.DoctorMapper;
+import ru.student.backend.db.model.Doctor;
 import ru.student.backend.services.dto.DoctorDto;
 import ru.student.backend.services.mapstruct.DoctorStruct;
 import ru.student.backend.services.service.DoctorService;
@@ -35,8 +36,9 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public DoctorDto insert(DoctorDto doctorDto) {
-        doctorMapper.insert(doctorStruct.fromDto(doctorDto));
-        return doctorDto;
+        Doctor doctor = doctorStruct.fromDto(doctorDto);
+        doctorMapper.insert(doctor);
+        return doctorStruct.toDto(doctor);
     }
 
     @Override

@@ -32,6 +32,13 @@ public interface DrugMapper {
                     "VALUES (#{name}, #{methodOfTaking}, #{dosage}," +
                     " #{descriptionOfAction} #{sideEffects})"
     )
+    @SelectKey(
+            before = false,
+            keyProperty = "drugId",
+            keyColumn = "drug_id",
+            statement = "select currval('drugs_drug_id_seq')",
+            resultType = Integer.class
+    )
     void insert(Drug drug);
 
     @Update(

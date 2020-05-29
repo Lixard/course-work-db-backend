@@ -10,21 +10,28 @@ public interface DoctorMapper {
 
     @Select(
             //language=PostgreSQL
-            "SELECT doctor_id, user_id, last_name, first_name, second_name FROM doctors"
+            "SELECT doctor_id, last_name, first_name, second_name FROM doctors"
     )
     List<Doctor> getDoctors();
 
     @Select(
             //language=PostgreSQL
-            "SELECT doctor_id, user_id, last_name, first_name, second_name FROM doctors " +
+            "SELECT doctor_id, last_name, first_name, second_name FROM doctors " +
                     "WHERE doctor_id = #{id}"
     )
     Doctor findById(@Param("id") int id);
 
     @Insert(
             //language=PostgreSQL
-            "INSERT INTO doctors(user_id, last_name, first_name, second_name) " +
-                    "VALUES (#{userId}, #{lastName}, #{firstName}, #{secondName})"
+            "INSERT INTO doctors(last_name, first_name, second_name) " +
+                    "VALUES (#{lastName}, #{firstName}, #{secondName})"
+    )
+    @SelectKey(
+            before = false,
+            keyProperty = "doctorId",
+            keyColumn = "doctor_id",
+            statement = "select currval('doctors_doctor_id_seq')",
+            resultType = Integer.class
     )
     void insert(Doctor doctor);
 

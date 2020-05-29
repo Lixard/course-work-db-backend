@@ -3,6 +3,7 @@ package ru.student.backend.services.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.student.backend.db.mapper.DiagnosesMapper;
+import ru.student.backend.db.model.Diagnosis;
 import ru.student.backend.services.dto.DiagnosisDto;
 import ru.student.backend.services.mapstruct.DiagnosisStruct;
 import ru.student.backend.services.service.DiagnosisService;
@@ -35,8 +36,9 @@ public class DiagnosisServiceImpl implements DiagnosisService {
 
     @Override
     public DiagnosisDto insert(DiagnosisDto diagnosisDto) {
-        diagnosesMapper.insert(diagnosisStruct.fromDto(diagnosisDto));
-        return diagnosisDto;
+        Diagnosis diagnosis = diagnosisStruct.fromDto(diagnosisDto);
+        diagnosesMapper.insert(diagnosis);
+        return diagnosisStruct.toDto(diagnosis);
     }
 
     @Override

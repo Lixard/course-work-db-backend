@@ -3,6 +3,7 @@ package ru.student.backend.services.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.student.backend.db.mapper.AppointmentMapper;
+import ru.student.backend.db.model.Appointment;
 import ru.student.backend.services.dto.AppointmentDto;
 import ru.student.backend.services.mapstruct.AppointmentStruct;
 import ru.student.backend.services.service.AppointmentService;
@@ -40,8 +41,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public AppointmentDto insert(AppointmentDto appointmentDto) {
-        appointmentMapper.insert(appointmentStruct.fromDto(appointmentDto));
-        return appointmentDto;
+        Appointment appointment = appointmentStruct.fromDto(appointmentDto);
+        appointmentMapper.insert(appointment);
+        return appointmentStruct.toDto(appointment);
     }
 
     @Override

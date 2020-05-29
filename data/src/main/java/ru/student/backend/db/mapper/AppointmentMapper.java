@@ -46,6 +46,13 @@ public interface AppointmentMapper {
             "INSERT INTO appointments(patient_id, doctor_id, place, appointment_date, symptoms) " +
                     "VALUES (#{patientId}, #{doctorId}, #{place}, #{appointmentDate}, #{symtoms})"
     )
+    @SelectKey(
+            before = false,
+            keyProperty = "appointmentId",
+            keyColumn = "appointment_id",
+            statement = "select currval('appointments_appointment_id_seq')",
+            resultType = Integer.class
+    )
     void insert(Appointment appointment);
 
     @Update(

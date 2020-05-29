@@ -48,6 +48,13 @@ public interface PatientMapper {
                     " VALUES (#{lastName}, #{firstName}, #{secondName}, #{sex}," +
                     " #{birthday}, #{policy}, #{serialPassport}, #{numberPassport})"
     )
+    @SelectKey(
+            before = false,
+            keyProperty = "patientId",
+            keyColumn = "patient_id",
+            statement = "select currval('patients_patient_id_seq')",
+            resultType = Integer.class
+    )
     void insert(Patient patient);
 
     @Update(

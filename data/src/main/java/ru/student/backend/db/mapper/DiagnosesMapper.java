@@ -28,6 +28,13 @@ public interface DiagnosesMapper {
             "INSERT INTO diagnoses(diagnosis_name) " +
                     "VALUES (#{diagnosisName})"
     )
+    @SelectKey(
+            before = false,
+            keyProperty = "diagnosisId",
+            keyColumn = "diagnosis_id",
+            statement = "select currval('diagnoses_diagnosis_id_seq')",
+            resultType = Integer.class
+    )
     void insert(Diagnosis diagnosis);
 
     @Update(
