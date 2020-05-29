@@ -2,6 +2,7 @@ CREATE DOMAIN sex AS char(1)
     CHECK (
             VALUE ~ 'M'
             OR VALUE ~ 'F'
+            OR VALUE ~ 'U'
         );
 
 CREATE TABLE "patients"
@@ -18,32 +19,13 @@ CREATE TABLE "patients"
     CONSTRAINT "patients_pk" PRIMARY KEY ("patient_id")
 );
 
-CREATE TABLE "roles"
-(
-    "role_id" int         NOT NULL,
-    "name"    varchar(50) NOT NULL,
-    CONSTRAINT "roles_pk" PRIMARY KEY ("role_id")
-);
-
-CREATE TABLE "users"
-(
-    "user_id"  serial      NOT NULL,
-    "username" varchar(50) NOT NULL,
-    "password" char(60)    NOT NULL,
-    "role"     int         NOT NULL,
-    CONSTRAINT "users_pk" PRIMARY KEY ("user_id"),
-    CONSTRAINT "users_fk0" FOREIGN KEY ("role") REFERENCES "roles" ("role_id")
-);
-
 CREATE TABLE "doctors"
 (
     "doctor_id"   serial      NOT NULL,
-    "user_id"     int         NOT NULL,
     "last_name"   varchar(50) NOT NULL,
     "first_name"  varchar(50) NOT NULL,
     "second_name" varchar(50) NULL,
-    CONSTRAINT "doctors_pk" PRIMARY KEY ("doctor_id"),
-    CONSTRAINT "doctors_fk0" FOREIGN KEY ("user_id") REFERENCES "users" ("user_id")
+    CONSTRAINT "doctors_pk" PRIMARY KEY ("doctor_id")
 );
 
 CREATE TABLE "drugs"
