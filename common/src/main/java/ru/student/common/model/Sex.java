@@ -4,8 +4,9 @@ import java.util.Optional;
 
 public enum Sex {
 
-    Male("M"),
-    Female("F"),
+    MALE("M"),
+    FEMALE("F"),
+    UNDEFINED("U"),
     ;
 
     private final String literal;
