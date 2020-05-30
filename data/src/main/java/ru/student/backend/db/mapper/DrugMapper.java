@@ -30,7 +30,7 @@ public interface DrugMapper {
             "INSERT INTO drugs(name, method_of_taking, dosage," +
                     " description_of_action, side_effects) " +
                     "VALUES (#{name}, #{methodOfTaking}, #{dosage}," +
-                    " #{descriptionOfAction} #{sideEffects})"
+                    " #{descriptionOfAction}, #{sideEffects})"
     )
     @SelectKey(
             before = false,
