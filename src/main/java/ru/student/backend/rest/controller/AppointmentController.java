@@ -37,7 +37,7 @@ public class AppointmentController {
         return appointmentService.insert(appointmentDto);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     AppointmentDto updateAppointment(@PathVariable("id") int id, @RequestBody AppointmentDto appointmentDto) {
         appointmentDto.setAppointmentId(id);
         return appointmentService.update(appointmentDto);

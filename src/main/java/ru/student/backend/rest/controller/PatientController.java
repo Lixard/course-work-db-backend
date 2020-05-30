@@ -47,8 +47,8 @@ public class PatientController {
         return appointmentService.getPatientAppointments(id);
     }
 
-    @PutMapping("/{id}")
-    PatientDto updatePatient(@PathVariable("id") int id, PatientDto patientDto) {
+    @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    PatientDto updatePatient(@PathVariable("id") int id, @RequestBody PatientDto patientDto) {
         patientDto.setPatientId(id);
         return patientService.update(patientDto);
     }
