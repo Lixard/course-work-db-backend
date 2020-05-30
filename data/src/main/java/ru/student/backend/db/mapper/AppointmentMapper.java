@@ -44,7 +44,7 @@ public interface AppointmentMapper {
     @Insert(
             //language=PostgreSQL
             "INSERT INTO appointments(patient_id, doctor_id, place, appointment_date, symptoms) " +
-                    "VALUES (#{patientId}, #{doctorId}, #{place}, #{appointmentDate}, #{symtoms})"
+                    "VALUES (#{patientId}, #{doctorId}, #{place}, #{appointmentDate}, #{symptoms})"
     )
     @SelectKey(
             before = false,

@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.student.common.model.Sex;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -14,7 +14,7 @@ public class Patient {
     private String firstName;
     private String secondName;
     private Sex sex;
-    private Date birthday;
+    private LocalDate birthday;
     private long policy;
     private int serialPassport;
     private int numberPassport;
