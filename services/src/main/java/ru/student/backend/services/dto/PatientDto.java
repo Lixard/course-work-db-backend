@@ -15,7 +15,7 @@ public class PatientDto {
     private String firstName;
     private String secondName;
     private Sex sex;
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate birthday;
     private long policy;
     private int serialPassport;
