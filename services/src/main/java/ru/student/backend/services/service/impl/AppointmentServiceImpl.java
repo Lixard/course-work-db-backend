@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import ru.student.backend.db.mapper.AppointmentMapper;
 import ru.student.backend.db.model.Appointment;
 import ru.student.backend.services.dto.AppointmentDto;
+import ru.student.backend.services.dto.ComplicatedAppointmentDto;
 import ru.student.backend.services.mapstruct.AppointmentStruct;
+import ru.student.backend.services.mapstruct.ComplicatedAppointmentStruct;
 import ru.student.backend.services.service.AppointmentService;
 
 import java.util.List;
@@ -15,18 +17,26 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     private final AppointmentMapper appointmentMapper;
     private final AppointmentStruct appointmentStruct;
+    private final ComplicatedAppointmentStruct complicatedAppointmentStruct;
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     public AppointmentServiceImpl(AppointmentMapper appointmentMapper,
-                                  AppointmentStruct appointmentStruct) {
+                                  AppointmentStruct appointmentStruct,
+                                  ComplicatedAppointmentStruct complicatedAppointmentStruct) {
         this.appointmentMapper = appointmentMapper;
         this.appointmentStruct = appointmentStruct;
+        this.complicatedAppointmentStruct = complicatedAppointmentStruct;
     }
 
     @Override
     public List<AppointmentDto> getAppointments() {
         return appointmentStruct.toDto(appointmentMapper.getAppointments());
+    }
+
+    @Override
+    public List<ComplicatedAppointmentDto> getComplicatedAppointments() {
+        return complicatedAppointmentStruct.toDto(appointmentMapper.getComplicatedAppointments());
     }
 
     @Override

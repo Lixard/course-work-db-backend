@@ -1,11 +1,14 @@
 package ru.student.backend.services.service;
 
 import ru.student.backend.services.dto.AppointmentDto;
+import ru.student.backend.services.dto.ComplicatedAppointmentDto;
 
 import java.util.List;
 
 public interface AppointmentService {
     List<AppointmentDto> getAppointments();
+
+    List<ComplicatedAppointmentDto> getComplicatedAppointments();
 
     AppointmentDto findById(int id);
 

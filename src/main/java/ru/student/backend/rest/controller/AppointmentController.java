@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.student.backend.services.dto.AppointmentDto;
+import ru.student.backend.services.dto.ComplicatedAppointmentDto;
 import ru.student.backend.services.service.AppointmentService;
 
 import java.util.List;
@@ -25,6 +26,11 @@ public class AppointmentController {
     @GetMapping
     List<AppointmentDto> getAppointments() {
         return appointmentService.getAppointments();
+    }
+
+    @GetMapping("/complicated")
+    List<ComplicatedAppointmentDto> getComplicatedAppointments() {
+        return appointmentService.getComplicatedAppointments();
     }
 
     @GetMapping("/{id}")

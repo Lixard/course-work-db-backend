@@ -2,6 +2,7 @@ package ru.student.backend.db.mapper;
 
 import org.apache.ibatis.annotations.*;
 import ru.student.backend.db.model.Appointment;
+import ru.student.backend.db.model.ComplicatedAppointment;
 
 import java.util.List;
 
@@ -19,6 +20,23 @@ public interface AppointmentMapper {
                     "FROM appointments"
     )
     List<Appointment> getAppointments();
+
+
+    @Select(
+            //language=PostgreSQL
+            "SELECT a.appointment_id," +
+                    " p.patient_id," +
+                    " p.last_name as patient_last_name," +
+                    " d.doctor_id," +
+                    " d.last_name as doctor_last_name," +
+                    " a.place," +
+                    " a.appointment_date," +
+                    " a.symptoms " +
+                    "FROM appointments a " +
+                    "JOIN doctors d on a.doctor_id = d.doctor_id " +
+                    "JOIN patients p on a.patient_id = p.patient_id"
+    )
+    List<ComplicatedAppointment> getComplicatedAppointments();
 
     @Select(
             //language=PostgreSQL
