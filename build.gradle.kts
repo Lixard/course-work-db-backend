@@ -1,5 +1,8 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
 plugins {
     java
+    id("org.springframework.boot") version "2.2.5.RELEASE"
 }
 
 allprojects {
@@ -28,4 +31,14 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web:2.2.6.RELEASE")
     implementation(project(":services"))
     implementation(project(":security"))
+}
+
+springBoot {
+    mainClassName = "ru.student.backend.rest.App"
+}
+
+val bootJar: BootJar by tasks
+
+bootJar.apply {
+    launchScript()
 }
