@@ -42,6 +42,42 @@ public interface AppointmentMapper {
     )
     List<ComplicatedAppointment> getComplicatedAppointments();
 
+
+    @Select(
+            //language=PostgreSQL
+            "SELECT a.appointment_id," +
+                    " d.doctor_id," +
+                    " d.last_name as doctor_last_name," +
+                    " d.first_name as doctor_first_name," +
+                    " d.second_name as doctor_second_name," +
+                    " a.place," +
+                    " a.appointment_date," +
+                    " a.symptoms " +
+                    "FROM appointments a " +
+                    "JOIN doctors d on a.doctor_id = d.doctor_id " +
+                    "JOIN patients p on a.patient_id = p.patient_id " +
+                    "WHERE a.patient_id = #{id}"
+    )
+    List<ComplicatedAppointment> getComplicatedAppointmentsByPatient(@Param("id") int patientId);
+
+
+    @Select(
+            //language=PostgreSQL
+            "SELECT a.appointment_id," +
+                    " p.patient_id," +
+                    " p.last_name as patient_last_name," +
+                    " p.first_name as patient_first_name," +
+                    " p.second_name as patient_second_name," +
+                    " a.place," +
+                    " a.appointment_date," +
+                    " a.symptoms " +
+                    "FROM appointments a " +
+                    "JOIN doctors d on a.doctor_id = d.doctor_id " +
+                    "JOIN patients p on a.patient_id = p.patient_id " +
+                    "WHERE a.doctor_id = #{id}"
+    )
+    List<ComplicatedAppointment> getComplicatedAppointmentsByDoctor(@Param("id") int doctorId);
+
     @Select(
             //language=PostgreSQL
             "SELECT appointment_id, patient_id, doctor_id, place, appointment_date, symptoms " +

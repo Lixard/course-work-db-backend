@@ -10,6 +10,10 @@ public interface AppointmentService {
 
     List<ComplicatedAppointmentDto> getComplicatedAppointments();
 
+    List<ComplicatedAppointmentDto> getComplicatedAppointmentsByPatient(int patientId);
+
+    List<ComplicatedAppointmentDto> getComplicatedAppointmentsByDoctor(int doctorId);
+
     AppointmentDto findById(int id);
 
     List<AppointmentDto> getPatientAppointments(int patientId);

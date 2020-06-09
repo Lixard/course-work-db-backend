@@ -40,6 +40,16 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
+    public List<ComplicatedAppointmentDto> getComplicatedAppointmentsByPatient(int patientId) {
+        return complicatedAppointmentStruct.toDto(appointmentMapper.getComplicatedAppointmentsByPatient(patientId));
+    }
+
+    @Override
+    public List<ComplicatedAppointmentDto> getComplicatedAppointmentsByDoctor(int doctorId) {
+        return complicatedAppointmentStruct.toDto(appointmentMapper.getComplicatedAppointmentsByDoctor(doctorId));
+    }
+
+    @Override
     public AppointmentDto findById(int id) {
         return appointmentStruct.toDto(appointmentMapper.findById(id));
     }

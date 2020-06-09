@@ -3,7 +3,9 @@ package ru.student.backend.rest.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import ru.student.backend.services.dto.ComplicatedAppointmentDto;
 import ru.student.backend.services.dto.DoctorDto;
+import ru.student.backend.services.service.AppointmentService;
 import ru.student.backend.services.service.DoctorService;
 
 import java.util.List;
@@ -16,10 +18,13 @@ import java.util.List;
 public class DoctorController {
 
     private final DoctorService doctorService;
+    private final AppointmentService appointmentService;
 
     @Autowired
-    public DoctorController(DoctorService doctorService) {
+    public DoctorController(DoctorService doctorService,
+                            AppointmentService appointmentService) {
         this.doctorService = doctorService;
+        this.appointmentService = appointmentService;
     }
 
     @GetMapping
@@ -30,6 +35,11 @@ public class DoctorController {
     @GetMapping("/{id}")
     DoctorDto getDoctorById(@PathVariable("id") int id) {
         return doctorService.findById(id);
+    }
+
+    @GetMapping("/{id}/appointments/complicated")
+    List<ComplicatedAppointmentDto> getComplicatedAppointmentsByDoctor(@PathVariable("id") int doctorId) {
+        return appointmentService.getComplicatedAppointmentsByDoctor(doctorId);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

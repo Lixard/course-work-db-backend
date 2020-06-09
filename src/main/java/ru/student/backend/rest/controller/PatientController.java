@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.student.backend.services.dto.AppointmentDto;
+import ru.student.backend.services.dto.ComplicatedAppointmentDto;
 import ru.student.backend.services.dto.PatientDto;
 import ru.student.backend.services.service.AppointmentService;
 import ru.student.backend.services.service.PatientService;
@@ -45,6 +46,11 @@ public class PatientController {
     @GetMapping("/{id}/appointments")
     List<AppointmentDto> getPatientAppointments(@PathVariable("id") int id) {
         return appointmentService.getPatientAppointments(id);
+    }
+
+    @GetMapping("/{id}/appointments/complicated")
+    List<ComplicatedAppointmentDto> getComplicatedAppointmentsByPatient(@PathVariable("id") int patientId) {
+        return appointmentService.getComplicatedAppointmentsByPatient(patientId);
     }
 
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
