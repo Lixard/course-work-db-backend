@@ -18,6 +18,8 @@ public class ComplicatedAppointmentDto {
     public static class SimpleEntity {
         private int id;
         private String lastName;
+        private String firstName;
+        private String secondName;
     }
 }
 

@@ -27,8 +27,12 @@ public interface AppointmentMapper {
             "SELECT a.appointment_id," +
                     " p.patient_id," +
                     " p.last_name as patient_last_name," +
+                    " p.first_name as patient_first_name," +
+                    " p.second_name as patient_second_name," +
                     " d.doctor_id," +
                     " d.last_name as doctor_last_name," +
+                    " d.first_name as doctor_first_name," +
+                    " d.second_name as doctor_second_name," +
                     " a.place," +
                     " a.appointment_date," +
                     " a.symptoms " +
