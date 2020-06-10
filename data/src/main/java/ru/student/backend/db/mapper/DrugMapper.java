@@ -48,7 +48,7 @@ public interface DrugMapper {
                     "method_of_taking = #{methodOfTaking}, " +
                     "dosage = #{dosage}, " +
                     "description_of_action = #{descriptionOfAction}, " +
-                    "side_effects = #{sideEffect} " +
+                    "side_effects = #{sideEffects} " +
                     "WHERE drug_id = #{drugId}"
     )
     void update(Drug drug);
