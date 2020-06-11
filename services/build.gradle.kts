@@ -9,4 +9,7 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.18.12")
 
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.0")
+
+    implementation("org.apache.poi:poi:4.1.2")
+    implementation("org.apache.poi:poi-ooxml:4.1.2")
 }

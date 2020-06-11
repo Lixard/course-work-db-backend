@@ -29,8 +29,12 @@ allprojects {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web:2.2.6.RELEASE")
+    implementation("org.apache.directory.studio:org.apache.commons.io:2.4")
     implementation(project(":services"))
     implementation(project(":security"))
+
+    annotationProcessor("org.projectlombok:lombok:1.18.12")
+    compileOnly("org.projectlombok:lombok:1.18.12")
 }
 
 springBoot {
