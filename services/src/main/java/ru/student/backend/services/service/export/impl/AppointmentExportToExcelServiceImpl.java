@@ -5,20 +5,31 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.student.backend.services.dto.ComplicatedAppointmentDto;
+import ru.student.backend.services.dto.DiagnosisDto;
+import ru.student.backend.services.dto.DrugDto;
 import ru.student.backend.services.service.AppointmentService;
+import ru.student.backend.services.service.PatientDiagnosesService;
+import ru.student.backend.services.service.PrescriptionOfDrugsService;
 import ru.student.backend.services.service.export.ExportToExcelService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.StringJoiner;
 
 
 @Service
 public class AppointmentExportToExcelServiceImpl extends AbstractExportToExcelService<ComplicatedAppointmentDto> implements ExportToExcelService {
 
+    private final PatientDiagnosesService patientDiagnosesService;
+    private final PrescriptionOfDrugsService prescriptionOfDrugsService;
     private final AppointmentService appointmentService;
 
     @Autowired
-    public AppointmentExportToExcelServiceImpl(AppointmentService appointmentService) {
+    public AppointmentExportToExcelServiceImpl(PatientDiagnosesService patientDiagnosesService,
+                                               PrescriptionOfDrugsService prescriptionOfDrugsService,
+                                               AppointmentService appointmentService) {
+        this.patientDiagnosesService = patientDiagnosesService;
+        this.prescriptionOfDrugsService = prescriptionOfDrugsService;
         this.appointmentService = appointmentService;
     }
 
@@ -37,6 +48,8 @@ public class AppointmentExportToExcelServiceImpl extends AbstractExportToExcelSe
         createCell(row, 3, "Date");
         createCell(row, 4, "Place");
         createCell(row, 5, "Symptoms");
+        createCell(row, 6, "Diagnoses");
+        createCell(row, 7, "Drugs");
     }
 
     @Override
@@ -60,6 +73,18 @@ public class AppointmentExportToExcelServiceImpl extends AbstractExportToExcelSe
             createCell(row, 3, element.getAppointmentDate());
             createCell(row, 4, element.getPlace());
             createCell(row, 5, element.getSymptoms());
+
+            StringJoiner joiner = new StringJoiner(", ");
+            for (DiagnosisDto diagnosis : patientDiagnosesService.getAppointmentDiagnoses(element.getAppointmentId())) {
+                joiner.add(diagnosis.getDiagnosisName());
+            }
+            createCell(row, 6, joiner.toString());
+
+            joiner = new StringJoiner(", ");
+            for (DrugDto drug : prescriptionOfDrugsService.getPrescriptionsOfDrugs(element.getAppointmentId())) {
+                joiner.add(drug.getName());
+            }
+            createCell(row, 7, joiner.toString());
         });
     }
 }
