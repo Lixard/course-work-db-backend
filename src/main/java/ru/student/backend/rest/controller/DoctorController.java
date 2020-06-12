@@ -1,13 +1,17 @@
 package ru.student.backend.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.student.backend.services.dto.ComplicatedAppointmentDto;
 import ru.student.backend.services.dto.DoctorDto;
 import ru.student.backend.services.service.AppointmentService;
 import ru.student.backend.services.service.DoctorService;
+import ru.student.backend.services.service.export.ExportToExcelService;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -19,12 +23,15 @@ public class DoctorController {
 
     private final DoctorService doctorService;
     private final AppointmentService appointmentService;
+    private final ExportToExcelService exportToExcelService;
 
     @Autowired
     public DoctorController(DoctorService doctorService,
-                            AppointmentService appointmentService) {
+                            AppointmentService appointmentService,
+                            @Qualifier("doctorExportToExcelServiceImpl") ExportToExcelService exportToExcelService) {
         this.doctorService = doctorService;
         this.appointmentService = appointmentService;
+        this.exportToExcelService = exportToExcelService;
     }
 
     @GetMapping
@@ -58,4 +65,9 @@ public class DoctorController {
         doctorService.delete(id);
     }
 
+    @GetMapping(value = "/export", produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    byte[] exportToExcel(HttpServletResponse response) throws IOException {
+        response.setHeader("Content-Disposition", "attachment; filename=doctors.xlsx");
+        return exportToExcelService.export();
+    }
 }

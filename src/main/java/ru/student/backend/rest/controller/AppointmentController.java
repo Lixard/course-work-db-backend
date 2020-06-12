@@ -6,10 +6,11 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.student.backend.services.dto.*;
 import ru.student.backend.services.service.AppointmentService;
-import ru.student.backend.services.service.ExportToExcelService;
 import ru.student.backend.services.service.PatientDiagnosesService;
 import ru.student.backend.services.service.PrescriptionOfDrugsService;
+import ru.student.backend.services.service.export.ExportToExcelService;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -98,8 +99,8 @@ public class AppointmentController {
     }
 
     @GetMapping(value = "/export", produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-    @ResponseBody
-    byte[] exportExcel() throws IOException {
+    byte[] exportExcel(HttpServletResponse response) throws IOException {
+        response.setHeader("Content-Disposition", "attachment; filename=appointments.xlsx");
         return exportToExcelService.export();
     }
 }

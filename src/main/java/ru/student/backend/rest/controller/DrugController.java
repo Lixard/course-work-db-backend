@@ -1,11 +1,15 @@
 package ru.student.backend.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.student.backend.services.dto.DrugDto;
 import ru.student.backend.services.service.DrugService;
+import ru.student.backend.services.service.export.ExportToExcelService;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -16,10 +20,13 @@ import java.util.List;
 public class DrugController {
 
     private final DrugService drugService;
+    private final ExportToExcelService exportToExcelService;
 
     @Autowired
-    public DrugController(DrugService drugService) {
+    public DrugController(DrugService drugService,
+                          @Qualifier("drugExportToExcelServiceImpl") ExportToExcelService exportToExcelService) {
         this.drugService = drugService;
+        this.exportToExcelService = exportToExcelService;
     }
 
     @GetMapping
@@ -46,5 +53,11 @@ public class DrugController {
     @DeleteMapping("/{id}")
     void deleteDrug(@PathVariable("id") int id) {
         drugService.delete(id);
+    }
+
+    @GetMapping(value = "/export", produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    byte[] exportToExcel(HttpServletResponse response) throws IOException {
+        response.setHeader("Content-Disposition", "attachment; filename=drugs.xlsx");
+        return exportToExcelService.export();
     }
 }
