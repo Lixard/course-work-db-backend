@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.*;
 import ru.student.backend.db.model.Appointment;
 import ru.student.backend.db.model.ComplicatedAppointment;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
@@ -42,6 +43,36 @@ public interface AppointmentMapper {
     )
     List<ComplicatedAppointment> getComplicatedAppointments();
 
+
+    @Select(
+            //language=PostgreSQL
+            "SELECT a.appointment_id," +
+                    "p.patient_id," +
+                    "p.last_name   as patient_last_name," +
+                    "p.first_name  as patient_first_name," +
+                    "p.second_name as patient_second_name," +
+                    "d.doctor_id," +
+                    "d.last_name   as doctor_last_name," +
+                    "d.first_name  as doctor_first_name," +
+                    "d.second_name as doctor_second_name," +
+                    "a.place," +
+                    "a.appointment_date," +
+                    "a.symptoms " +
+                    "FROM appointments a " +
+                    "JOIN doctors d on a.doctor_id = d.doctor_id " +
+                    "JOIN patients p on a.patient_id = p.patient_id " +
+                    "GROUP BY  a.appointment_id," +
+                    "p.patient_id," +
+                    "d.doctor_id," +
+                    "doctor_last_name," +
+                    "doctor_first_name," +
+                    "doctor_second_name," +
+                    "a.place," +
+                    "a.appointment_date," +
+                    "a.symptoms " +
+                    "HAVING min(a.appointment_date) > #{date}"
+    )
+    List<ComplicatedAppointment> getComplicatedAppointmentsEarlierThanDate(@Param("date") LocalDateTime date);
 
     @Select(
             //language=PostgreSQL

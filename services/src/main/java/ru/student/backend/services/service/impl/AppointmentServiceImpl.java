@@ -10,6 +10,7 @@ import ru.student.backend.services.mapstruct.AppointmentStruct;
 import ru.student.backend.services.mapstruct.ComplicatedAppointmentStruct;
 import ru.student.backend.services.service.AppointmentService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -32,6 +33,11 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public List<AppointmentDto> getAppointments() {
         return appointmentStruct.toDto(appointmentMapper.getAppointments());
+    }
+
+    @Override
+    public List<ComplicatedAppointmentDto> getComplicatedAppointmentsEarlierThan(LocalDateTime date) {
+        return complicatedAppointmentStruct.toDto(appointmentMapper.getComplicatedAppointmentsEarlierThanDate(date));
     }
 
     @Override

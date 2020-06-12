@@ -2,16 +2,19 @@ package ru.student.backend.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.student.backend.services.dto.*;
 import ru.student.backend.services.service.AppointmentService;
 import ru.student.backend.services.service.PatientDiagnosesService;
 import ru.student.backend.services.service.PrescriptionOfDrugsService;
+import ru.student.backend.services.service.export.AppointmentExportToExcelService;
 import ru.student.backend.services.service.export.ExportToExcelService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -25,16 +28,19 @@ public class AppointmentController {
     private final PatientDiagnosesService patientDiagnosesService;
     private final PrescriptionOfDrugsService prescriptionOfDrugsService;
     private final ExportToExcelService exportToExcelService;
+    private final AppointmentExportToExcelService appointmentExportToExcelService;
 
     @Autowired
     public AppointmentController(AppointmentService appointmentService,
                                  PatientDiagnosesService patientDiagnosesService,
                                  PrescriptionOfDrugsService prescriptionOfDrugsService,
-                                 @Qualifier("appointmentExportToExcelServiceImpl") ExportToExcelService exportToExcelService) {
+                                 @Qualifier("appointmentExportToExcelServiceImpl") ExportToExcelService exportToExcelService,
+                                 AppointmentExportToExcelService appointmentExportToExcelService) {
         this.appointmentService = appointmentService;
         this.patientDiagnosesService = patientDiagnosesService;
         this.prescriptionOfDrugsService = prescriptionOfDrugsService;
         this.exportToExcelService = exportToExcelService;
+        this.appointmentExportToExcelService = appointmentExportToExcelService;
     }
 
     @GetMapping
@@ -45,6 +51,11 @@ public class AppointmentController {
     @GetMapping("/complicated")
     List<ComplicatedAppointmentDto> getComplicatedAppointments() {
         return appointmentService.getComplicatedAppointments();
+    }
+
+    @GetMapping("/complicated/{date}")
+    List<ComplicatedAppointmentDto> getComplicatedAppointmentsEarlierThan(@PathVariable("date") @DateTimeFormat(pattern = "dd-MM-yyyy_HH:mm:ss") LocalDateTime date) {
+        return appointmentService.getComplicatedAppointmentsEarlierThan(date);
     }
 
     @GetMapping("/{id}")
@@ -102,5 +113,10 @@ public class AppointmentController {
     byte[] exportExcel(HttpServletResponse response) throws IOException {
         response.setHeader("Content-Disposition", "attachment; filename=appointments.xlsx");
         return exportToExcelService.export();
+    }
+
+    @GetMapping(value = "/export/{date}", produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    byte[] exportExcelWithDateEarlierThan(@PathVariable("date") @DateTimeFormat(pattern = "dd-MM-yyyy_HH:mm:ss") LocalDateTime date) throws IOException {
+        return appointmentExportToExcelService.export(date);
     }
 }

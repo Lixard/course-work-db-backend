@@ -10,15 +10,17 @@ import ru.student.backend.services.dto.DrugDto;
 import ru.student.backend.services.service.AppointmentService;
 import ru.student.backend.services.service.PatientDiagnosesService;
 import ru.student.backend.services.service.PrescriptionOfDrugsService;
+import ru.student.backend.services.service.export.AppointmentExportToExcelService;
 import ru.student.backend.services.service.export.ExportToExcelService;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.StringJoiner;
 
 
 @Service
-public class AppointmentExportToExcelServiceImpl extends AbstractExportToExcelService<ComplicatedAppointmentDto> implements ExportToExcelService {
+public class AppointmentExportToExcelServiceImpl extends AbstractExportToExcelService<ComplicatedAppointmentDto> implements ExportToExcelService, AppointmentExportToExcelService {
 
     private final PatientDiagnosesService patientDiagnosesService;
     private final PrescriptionOfDrugsService prescriptionOfDrugsService;
@@ -86,5 +88,11 @@ public class AppointmentExportToExcelServiceImpl extends AbstractExportToExcelSe
             }
             createCell(row, 7, joiner.toString());
         });
+    }
+
+    @Override
+    public byte[] export(LocalDateTime date) throws IOException {
+        appointmentService.getComplicatedAppointmentsEarlierThan(date).forEach(System.out::println);
+        return createExport(appointmentService.getComplicatedAppointmentsEarlierThan(date));
     }
 }
