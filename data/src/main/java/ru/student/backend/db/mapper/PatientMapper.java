@@ -2,7 +2,7 @@ package ru.student.backend.db.mapper;
 
 import org.apache.ibatis.annotations.*;
 import ru.student.backend.db.model.Patient;
-import ru.student.backend.db.model.PatientsWithAppointmentDate;
+import ru.student.backend.db.model.PatientWithAppointmentDate;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -55,9 +55,9 @@ public interface PatientMapper {
                     "AND max(a.appointment_date) < #{dateEnd}"
 
     )
-    List<PatientsWithAppointmentDate> getPatientsForCurrentDoctorForPeriod(@Param("doctorId") int doctorId,
-                                                                           @Param("dateStart") LocalDateTime dateStart,
-                                                                           @Param("dateEnd") LocalDateTime dateEnd);
+    List<PatientWithAppointmentDate> getPatientsForCurrentDoctorForPeriod(@Param("doctorId") int doctorId,
+                                                                          @Param("dateStart") LocalDateTime dateStart,
+                                                                          @Param("dateEnd") LocalDateTime dateEnd);
 
     @Select(
             //language=PostgreSQL
