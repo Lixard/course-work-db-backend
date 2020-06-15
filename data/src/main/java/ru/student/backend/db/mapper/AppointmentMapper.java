@@ -87,17 +87,7 @@ public interface AppointmentMapper {
                     "FROM appointments a " +
                     "JOIN doctors d on a.doctor_id = d.doctor_id " +
                     "JOIN patients p on a.patient_id = p.patient_id " +
-                    "GROUP BY a.appointment_id," +
-                    " a.patient_id," +
-                    " d.doctor_id," +
-                    " doctor_last_name," +
-                    " doctor_first_name," +
-                    " doctor_second_name, " +
-                    " a.place," +
-                    " a.appointment_date," +
-                    " a.symptoms " +
-                    "HAVING a.patient_id = #{id}"
-
+                    "WHERE a.patient_id = #{id}"
     )
     List<ComplicatedAppointment> getComplicatedAppointmentsByPatient(@Param("id") int patientId);
 
@@ -115,17 +105,7 @@ public interface AppointmentMapper {
                     "FROM appointments a " +
                     "JOIN doctors d on a.doctor_id = d.doctor_id " +
                     "JOIN patients p on a.patient_id = p.patient_id " +
-                    "GROUP BY a.appointment_id," +
-                    " p.patient_id," +
-                    " a.doctor_id," +
-                    " d.doctor_id," +
-                    " patient_last_name," +
-                    " patient_first_name," +
-                    " patient_second_name, " +
-                    " a.place," +
-                    " a.appointment_date," +
-                    " a.symptoms " +
-                    "HAVING a.doctor_id = #{id}"
+                    "WHERE a.doctor_id = #{id}"
     )
     List<ComplicatedAppointment> getComplicatedAppointmentsByDoctor(@Param("id") int doctorId);
 
