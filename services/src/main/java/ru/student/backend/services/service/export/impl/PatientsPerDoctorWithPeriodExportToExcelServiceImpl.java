@@ -40,7 +40,6 @@ public class PatientsPerDoctorWithPeriodExportToExcelServiceImpl extends Abstrac
         createCell(row, 6, "Policy");
         createCell(row, 7, "Serial");
         createCell(row, 8, "Number");
-        createCell(row, 9, "Appointment date");
     }
 
     @Override
@@ -59,7 +58,6 @@ public class PatientsPerDoctorWithPeriodExportToExcelServiceImpl extends Abstrac
             createCell(row, 6, element.getPolicy());
             createCell(row, 7, element.getSerialPassport());
             createCell(row, 8, element.getNumberPassport());
-            createCell(row, 9, element.getAppointmentDate().toString());
         });
     }
 }

@@ -28,7 +28,7 @@ public interface PatientMapper {
 
     @Select(
             //language=PostgreSQL
-            "SELECT p.patient_id, " +
+            "SELECT DISTINCT  p.patient_id, " +
                     "p.last_name," +
                     "p.first_name, " +
                     "p.second_name, " +
@@ -36,8 +36,7 @@ public interface PatientMapper {
                     "p.birthday, " +
                     "p.policy, " +
                     "p.serial_passport, " +
-                    "p.number_passport, " +
-                    "a.appointment_date " +
+                    "p.number_passport " +
                     "FROM appointments a " +
                     "JOIN patients p on a.patient_id = p.patient_id " +
                     "WHERE a.doctor_id = #{doctorId} " +
@@ -50,7 +49,7 @@ public interface PatientMapper {
                     "p.policy, " +
                     "p.serial_passport, " +
                     "p.number_passport, " +
-                    " a.appointment_date " +
+                    "a.appointment_date " +
                     "HAVING min(a.appointment_date) > #{dateStart} " +
                     "AND max(a.appointment_date) < #{dateEnd}"
 
